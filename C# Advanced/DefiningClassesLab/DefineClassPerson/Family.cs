@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DefiningClasses
@@ -8,9 +9,9 @@ namespace DefiningClasses
     {
         public Family()
         {
-            People = new List<Person>();  
+            People = new List<Person>();
         }
-        public List<Person> People {get; set;}
+        public List<Person> People { get; set; }
         public void AddMember(Person member)
         {
             People.Add(member);
@@ -18,20 +19,18 @@ namespace DefiningClasses
 
         public Person GetOldestMember()
         {
-            int maxAge = -100000;
-            Person person = null;
-            foreach (var currentPerson in People)
-            {
-                var currentAge = currentPerson.Age;
 
-                if (currentAge > maxAge)
-                {
-                    maxAge = currentAge;
-                    person = currentPerson;
-                }
-                
-            }
-            return person;
+            return People.OrderByDescending(x => x.Age).First();
+
+        }
+
+        public Person[] GetPeople()
+        {
+            var people = People.Where(x => x.Age > 30)
+                .OrderBy(x => x.Name)
+                .ToArray();
+
+            return people;
         }
     }
 }
