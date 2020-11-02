@@ -28,10 +28,7 @@ namespace _01.ClassBoxData
             }
             private set
             {
-                if (value < 0)
-                {
-                    throw new ArgumentException($"Lenght cannot be zero or negative.");
-                }
+                this.ValidateString(value, nameof(Lenght));
                 this.lenght = value;
             }
         }
@@ -45,10 +42,7 @@ namespace _01.ClassBoxData
             }
             private set
             {
-                if (value < 0)
-                {
-                    throw new ArgumentException($"Width cannot be zero or negative.");
-                }
+                this.ValidateString(value, nameof(Width));
                 this.width = value;
 
             }
@@ -64,10 +58,8 @@ namespace _01.ClassBoxData
             }
             private set
             {
-                if (height < 0)
-                {
-                    throw new ArgumentException("Height cannot be zero or negative.");
-                }
+                this.ValidateString(value, nameof(Height));
+
                 this.height = value;
             }
             
@@ -90,11 +82,11 @@ namespace _01.ClassBoxData
             return sb.ToString().TrimEnd();
          }
 
-        private void ValidateString(double side, string text)
+        private void ValidateString(double side, string paramName )
         {
             if (side < 0)
             {
-                throw new ArgumentException(String.Format(textValidator, nameof(side)));
+                throw new ArgumentException(String.Format(textValidator, paramName));
             }
             
         }
