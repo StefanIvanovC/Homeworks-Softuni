@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace _03.ShoppingSpree
+namespace _03.ShoppingSpree.Common
 {
-    public class Person
+    class GlobalConstants
     {
     }
 }
