@@ -4,7 +4,10 @@ using System.Text;
 
 namespace _03.ShoppingSpree.Common
 {
-    class GlobalConstants
+    public static class GlobalConstants
     {
+        public const string EmptyNameExcMsg = "Name cannot be empty";
+
+        public const string MoneyNegativeExcMsg = "Money cannot be negative";
     }
 }
