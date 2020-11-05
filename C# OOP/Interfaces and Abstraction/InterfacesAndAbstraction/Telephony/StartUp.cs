@@ -29,7 +29,6 @@ namespace Telephony
                     Console.WriteLine("Invalid number!");
                 }
                 
-
             }
 
             for (int i = 0; i < webUrls.Length; i++)
