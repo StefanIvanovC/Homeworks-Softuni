@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Telephony.Interfaces;
 
 namespace Telephony.Models
 {
-    public class Smartphone : ICalling
+    public class Smartphone : ICalling , IBrowsing
     {
 
         public Smartphone()
@@ -27,12 +28,20 @@ namespace Telephony.Models
 
         public string Call(string PhoneNumber)
         {
+            if (!PhoneNumber.All(x => char.IsDigit(x)))
+            {
+                return "Invalid number!";
+            }
             return $"Calling... {PhoneNumber}";
         }
 
         public string Browse(string url)
         {
-            return $"Browsing: {url}";
+            if (url.Any(x => char.IsDigit(x)))
+            {
+                return "Invalid URL!";
+            }
+            return $"Browsing: {url}!";
         }
     }
 }

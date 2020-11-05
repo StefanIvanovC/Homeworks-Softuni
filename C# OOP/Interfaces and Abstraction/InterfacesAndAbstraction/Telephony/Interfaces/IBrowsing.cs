@@ -6,6 +6,6 @@ namespace Telephony.Interfaces
 {
     public interface IBrowsing
     {
-        public string Browse(string URL);
+        public string Browse(string url);
     }
 }
