@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Military_Elite.Enumeration
 {
-    class SoldierCorpEnum
+    public enum SoldierCorpEnum
     {
+        Airforces = 1;
     }
 }
