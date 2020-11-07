@@ -4,7 +4,12 @@ using System.Text;
 
 namespace Military_Elite
 {
-    interface ISoldier
+    public interface ISoldier
     {
+        int Id { get; set; }
+
+        string Name { get; set; }
+
+        string LastName { get; set; }
     }
 }

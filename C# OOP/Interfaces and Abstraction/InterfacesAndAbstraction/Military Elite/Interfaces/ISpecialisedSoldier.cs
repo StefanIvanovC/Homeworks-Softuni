@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Military_Elite.Interfaces
 {
-    interface ISpecialisedSoldier
+    public interface ISpecialisedSoldier
     {
+
     }
 }
