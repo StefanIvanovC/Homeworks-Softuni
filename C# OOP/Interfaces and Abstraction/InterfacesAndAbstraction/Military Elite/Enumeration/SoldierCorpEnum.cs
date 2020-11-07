@@ -6,6 +6,7 @@ namespace Military_Elite.Enumeration
 {
     public enum SoldierCorpEnum
     {
-        Airforces = 1;
+        Airforces = 1,
+        Marines = 2
     }
 }
