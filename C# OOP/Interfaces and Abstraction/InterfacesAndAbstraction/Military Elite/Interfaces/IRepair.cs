@@ -4,7 +4,10 @@ using System.Text;
 
 namespace Military_Elite.Interfaces
 {
-    class IRepair
+    public class IRepair
     {
+        public string PartName { get; }
+
+        public int HoursWorked { get; }
     }
 }
