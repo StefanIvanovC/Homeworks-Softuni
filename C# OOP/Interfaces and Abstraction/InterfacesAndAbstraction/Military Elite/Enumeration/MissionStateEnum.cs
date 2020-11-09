@@ -4,7 +4,9 @@ using System.Text;
 
 namespace Military_Elite.Enumeration
 {
-    class MissionStateEnum
+    public enum MissionStateEnum
     {
+        inProgres = 1,
+        Finished =2
     }
 }

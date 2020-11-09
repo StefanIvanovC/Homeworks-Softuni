@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Military_Elite.Interfaces
 {
-    public interface ILieutenantGeneral : IPrivate
+    public interface ILieutenantGeneral 
     {
         ICollection<IPrivate> privates { get; set; }
     }
