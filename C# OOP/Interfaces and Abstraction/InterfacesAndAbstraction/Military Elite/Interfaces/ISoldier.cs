@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Military_Elite.Models;
 
 namespace Military_Elite
 {
     public interface ISoldier
     {
-        int Id { get; set; }
+        int Id { get; }
 
-        string Name { get; set; }
+        string Name { get; }
 
-        string LastName { get; set; }
+        string LastName { get; }
     }
 }

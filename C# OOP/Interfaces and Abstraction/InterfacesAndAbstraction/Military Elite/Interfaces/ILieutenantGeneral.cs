@@ -6,6 +6,6 @@ namespace Military_Elite.Interfaces
 {
     public interface ILieutenantGeneral 
     {
-        ICollection<IPrivate> privates { get; set; }
+         public ICollection<IPrivate> Privates { get; }
     }
 }
