@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataTypesAndVariables", "Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SumDigits", "SumDigits\SumDigits.csproj", "{14595CAE-5BAA-4FF2-89AF-A4CC5E8604CC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elevator", "Elevator\Elevator.csproj", "{B7DD1426-2C57-4AA1-A34B-F63DCBB5C614}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{14595CAE-5BAA-4FF2-89AF-A4CC5E8604CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14595CAE-5BAA-4FF2-89AF-A4CC5E8604CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14595CAE-5BAA-4FF2-89AF-A4CC5E8604CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7DD1426-2C57-4AA1-A34B-F63DCBB5C614}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7DD1426-2C57-4AA1-A34B-F63DCBB5C614}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7DD1426-2C57-4AA1-A34B-F63DCBB5C614}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7DD1426-2C57-4AA1-A34B-F63DCBB5C614}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
