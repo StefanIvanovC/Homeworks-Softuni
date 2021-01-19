@@ -21,11 +21,7 @@ namespace ConsoleApp2
                 arr[arr.Length - 1] = temp;
             }
 
-
-
-
             Console.WriteLine(string.Join(" ", arr));
-
         }
     }
 }
