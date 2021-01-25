@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmallestOfThreeNumbers", "SmallestOfThreeNumbers\SmallestOfThreeNumbers.csproj", "{274F67D8-6545-47A3-AA9F-B04023ECB36F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VowelsCount", "VowelsCount\VowelsCount.csproj", "{A5832E60-2C45-4B09-91D7-5C3E4FAD4031}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VowelsCount", "VowelsCount\VowelsCount.csproj", "{A5832E60-2C45-4B09-91D7-5C3E4FAD4031}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CharactersInRange", "CharactersInRange\CharactersInRange.csproj", "{CC051770-E799-4433-B2B2-0B3EB84F3778}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{A5832E60-2C45-4B09-91D7-5C3E4FAD4031}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5832E60-2C45-4B09-91D7-5C3E4FAD4031}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5832E60-2C45-4B09-91D7-5C3E4FAD4031}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC051770-E799-4433-B2B2-0B3EB84F3778}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC051770-E799-4433-B2B2-0B3EB84F3778}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC051770-E799-4433-B2B2-0B3EB84F3778}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC051770-E799-4433-B2B2-0B3EB84F3778}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
