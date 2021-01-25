@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddAndSubtract", "AddAndSub
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiddleCharacters", "MiddleCharacters\MiddleCharacters.csproj", "{400E4F4A-8D3F-4EFC-815C-68C171926429}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NxNMatrix", "NxNMatrix\NxNMatrix.csproj", "{DCEB68C4-8320-447D-8169-177E9C952ACE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{400E4F4A-8D3F-4EFC-815C-68C171926429}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{400E4F4A-8D3F-4EFC-815C-68C171926429}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{400E4F4A-8D3F-4EFC-815C-68C171926429}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCEB68C4-8320-447D-8169-177E9C952ACE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCEB68C4-8320-447D-8169-177E9C952ACE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCEB68C4-8320-447D-8169-177E9C952ACE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCEB68C4-8320-447D-8169-177E9C952ACE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
