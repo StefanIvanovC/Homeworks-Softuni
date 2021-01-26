@@ -7,19 +7,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmallestOfThreeNumbers", "S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VowelsCount", "VowelsCount\VowelsCount.csproj", "{A5832E60-2C45-4B09-91D7-5C3E4FAD4031}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CharactersInRange", "CharactersInRange\CharactersInRange.csproj", "{CC051770-E799-4433-B2B2-0B3EB84F3778}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CharactersInRange", "CharactersInRange\CharactersInRange.csproj", "{CC051770-E799-4433-B2B2-0B3EB84F3778}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasswordValidator", "PasswordValidator\PasswordValidator.csproj", "{7ADBC8DD-CC06-4759-A754-15F5C10D0F8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PasswordValidator", "PasswordValidator\PasswordValidator.csproj", "{7ADBC8DD-CC06-4759-A754-15F5C10D0F8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddAndSubtract", "AddAndSubtract\AddAndSubtract.csproj", "{46932979-35F1-48EF-BEC6-2BC6B740CC22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddAndSubtract", "AddAndSubtract\AddAndSubtract.csproj", "{46932979-35F1-48EF-BEC6-2BC6B740CC22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiddleCharacters", "MiddleCharacters\MiddleCharacters.csproj", "{400E4F4A-8D3F-4EFC-815C-68C171926429}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiddleCharacters", "MiddleCharacters\MiddleCharacters.csproj", "{400E4F4A-8D3F-4EFC-815C-68C171926429}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NxNMatrix", "NxNMatrix\NxNMatrix.csproj", "{DCEB68C4-8320-447D-8169-177E9C952ACE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NxNMatrix", "NxNMatrix\NxNMatrix.csproj", "{DCEB68C4-8320-447D-8169-177E9C952ACE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactorialDivision", "FactorialDivision\FactorialDivision.csproj", "{DCD7A720-CC53-47A4-9DBF-3ECC155D9CD0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FactorialDivision", "FactorialDivision\FactorialDivision.csproj", "{DCD7A720-CC53-47A4-9DBF-3ECC155D9CD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalindromeIntegers", "PalindromeIntegers\PalindromeIntegers.csproj", "{763AC088-9206-4B68-A759-FAF06F33829B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PalindromeIntegers", "PalindromeIntegers\PalindromeIntegers.csproj", "{763AC088-9206-4B68-A759-FAF06F33829B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopNumber", "TopNumber\TopNumber.csproj", "{A119EC69-A82F-4277-AA95-2C5DCA7B7FBD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{763AC088-9206-4B68-A759-FAF06F33829B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{763AC088-9206-4B68-A759-FAF06F33829B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{763AC088-9206-4B68-A759-FAF06F33829B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A119EC69-A82F-4277-AA95-2C5DCA7B7FBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A119EC69-A82F-4277-AA95-2C5DCA7B7FBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A119EC69-A82F-4277-AA95-2C5DCA7B7FBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A119EC69-A82F-4277-AA95-2C5DCA7B7FBD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
