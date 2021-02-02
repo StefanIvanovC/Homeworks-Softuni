@@ -1,3 +1,8 @@
+SELECT FirstName,
+LastName,
+Salary,
+dbo.
+
 CREATE PROC usp_GetEmployeesFromTown (@nameOfTown NVARCHAR(50))
 AS 
 SELECT FirstName, LastName
