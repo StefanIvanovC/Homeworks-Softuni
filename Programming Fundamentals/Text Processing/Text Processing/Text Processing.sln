@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01. Valid Usernames", "01. Valid Usernames\01. Valid Usernames.csproj", "{451ABF6B-4CFF-4675-B17A-C8A97148D477}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03. Extract File", "03. Extract File\03. Extract File.csproj", "{FA3C9464-5C80-4961-8BCF-74CCCD238261}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{451ABF6B-4CFF-4675-B17A-C8A97148D477}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{451ABF6B-4CFF-4675-B17A-C8A97148D477}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{451ABF6B-4CFF-4675-B17A-C8A97148D477}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA3C9464-5C80-4961-8BCF-74CCCD238261}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA3C9464-5C80-4961-8BCF-74CCCD238261}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA3C9464-5C80-4961-8BCF-74CCCD238261}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA3C9464-5C80-4961-8BCF-74CCCD238261}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
