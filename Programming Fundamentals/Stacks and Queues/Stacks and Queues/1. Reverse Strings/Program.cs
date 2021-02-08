@@ -10,12 +10,18 @@ namespace ConsoleApp31
     {
         static void Main(string[] args)
         {
-            Stack<char> charact = new Stack<char>(Console.ReadLine());
-            while (charact.Count > 0)
+            Queue<int> quie = new Queue<int>();
+
+            while (quie.Count > 5)
             {
-                char dt = charact.Pop();
-                Console.Write(dt);
+                quie.Enqueue(2);
+
             }
-        }
+
+            foreach (var item in quie)
+            {
+                Console.WriteLine(quie.Peek());
+            }
+         }
     }
 }
