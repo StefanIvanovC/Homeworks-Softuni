@@ -5,11 +5,13 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "1. Reverse Strings", "1. Reverse Strings\1. Reverse Strings.csproj", "{A7B1BDC6-8110-4D18-84EB-FCDAFE85E12B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02. Basic Queue Operations", "02. Basic Queue Operations\02. Basic Queue Operations.csproj", "{530D4419-AEA9-45D8-994E-260D0035C809}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "02. Basic Queue Operations", "02. Basic Queue Operations\02. Basic Queue Operations.csproj", "{530D4419-AEA9-45D8-994E-260D0035C809}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03. Maximum and Minimum Element", "03. Maximum and Minimum Element\03. Maximum and Minimum Element.csproj", "{3AF49CA6-8504-47A6-BCD2-DD3B8BC1B256}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "03. Maximum and Minimum Element", "03. Maximum and Minimum Element\03. Maximum and Minimum Element.csproj", "{3AF49CA6-8504-47A6-BCD2-DD3B8BC1B256}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04. Fast Food", "04. Fast Food\04. Fast Food.csproj", "{B1F9FEEE-9514-45F9-AF2C-67B6A55FE88A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "04. Fast Food", "04. Fast Food\04. Fast Food.csproj", "{B1F9FEEE-9514-45F9-AF2C-67B6A55FE88A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05. Fashion Boutique", "05. Fashion Boutique\05. Fashion Boutique.csproj", "{58AEC095-ECED-4340-A3B8-B52EFDCCA6CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{B1F9FEEE-9514-45F9-AF2C-67B6A55FE88A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1F9FEEE-9514-45F9-AF2C-67B6A55FE88A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1F9FEEE-9514-45F9-AF2C-67B6A55FE88A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58AEC095-ECED-4340-A3B8-B52EFDCCA6CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58AEC095-ECED-4340-A3B8-B52EFDCCA6CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58AEC095-ECED-4340-A3B8-B52EFDCCA6CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58AEC095-ECED-4340-A3B8-B52EFDCCA6CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
