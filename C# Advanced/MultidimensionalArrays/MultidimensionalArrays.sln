@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "1. Diagonal Difference", "1. Diagonal Difference\1. Diagonal Difference.csproj", "{7C436091-255A-4D4C-A195-4E1CC6FBF911}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7C436091-255A-4D4C-A195-4E1CC6FBF911}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C436091-255A-4D4C-A195-4E1CC6FBF911}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C436091-255A-4D4C-A195-4E1CC6FBF911}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C436091-255A-4D4C-A195-4E1CC6FBF911}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7C5CD3B9-CD1F-4834-8D8E-08D70838F876}
+	EndGlobalSection
+EndGlobal
