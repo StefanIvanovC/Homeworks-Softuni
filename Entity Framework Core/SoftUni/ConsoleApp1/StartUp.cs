@@ -1,6 +1,8 @@
-﻿using SoftUni.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SoftUni.Data;
 using SoftUni.Models;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -11,8 +13,47 @@ namespace SoftUni
         static void Main(string[] args)
         {
             var softUniContex = new SoftUniContext();
-            var result = AddNewAddressToEmployee(softUniContex);
+            var result = GetEmployeesInPeriod(softUniContex);
             Console.WriteLine(result);
+        }
+
+        public static string GetEmployeesInPeriod(SoftUniContext context)
+        {
+            var employees = context.Employees
+                .Include(x => x.EmployeesProjects)
+                .ThenInclude(x => x.Project)
+                .Where(x => x.EmployeesProjects.Any(p => p.Project.StartDate.Year >= 2001 &&
+                                                         p.Project.StartDate.Year <= 2003))
+                .Select(x => new
+                {
+                    EmployeeFirstName = x.FirstName,
+                    EmployeeLastName = x.LastName,
+                    ManagerFirstName = x.Manager.FirstName,
+                    ManagerLastName = x.Manager.LastName,
+                    Projects = x.EmployeesProjects.Select(p => new { 
+                    projectName = p.Project.Name,
+                    projectStart = p.Project.StartDate,
+                    ProjectEnd = p.Project.EndDate,
+                    })
+                })
+                .Take(10)
+                .ToList();
+
+            var sb = new StringBuilder();
+
+            foreach (var employee in employees)
+            {
+                sb.AppendLine($"{employee.EmployeeFirstName} {employee.EmployeeLastName} - Manager: {employee.ManagerFirstName} {employee.ManagerLastName}");
+
+                foreach (var project in employee.Projects)
+                {
+                    var endDate = project.ProjectEnd.HasValue ? project.ProjectEnd.Value.ToString("M/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture) : "not finished";
+
+                        sb.AppendLine($"--{project.projectName} - {project.projectStart.ToString("M/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture)} - {endDate}");
+                }
+            }
+
+            return sb.ToString().TrimEnd();
         }
 
         public static string AddNewAddressToEmployee(SoftUniContext context)
