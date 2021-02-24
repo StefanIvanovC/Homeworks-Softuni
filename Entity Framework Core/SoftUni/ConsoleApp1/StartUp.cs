@@ -13,8 +13,48 @@ namespace SoftUni
         static void Main(string[] args)
         {
             var softUniContex = new SoftUniContext();
-            var result = GetAddressesByTown(softUniContex);
+            var result = GetDepartmentsWithMoreThan5Employees(softUniContex);
             Console.WriteLine(result);
+        }
+
+        public static string GetDepartmentsWithMoreThan5Employees(SoftUniContext context)
+        {
+            var deppartments = context.Departments
+                .Where(x => x.Employees.Count > 5)
+                .OrderBy(x => x.Employees.Count)
+                .ThenBy(x => x.Name)
+                .Include(x => x.Employees)
+                .Select(x => new
+                {
+                    x.Name,
+                    x.Manager.FirstName,
+                    x.Manager.LastName,
+                    Employees = x.Employees.Select(e => new
+                    {
+                        e.FirstName,
+                        e.LastName,
+                        e.JobTitle
+                    })
+                     .OrderBy(x => x.FirstName)
+                     .ThenBy(x => x.LastName)
+                     .ToList()
+                })
+                .ToList();
+        
+
+            var sb = new StringBuilder();
+
+            foreach (var dep in deppartments)
+            {
+                sb.AppendLine($"{dep.Name} – {dep.FirstName} {dep.LastName}");
+
+                foreach (var emp in dep.Employees)
+                {
+                    sb.AppendLine($"{emp.FirstName} {emp.LastName} - {emp.JobTitle}");
+                }
+            }
+
+            return sb.ToString().TrimEnd();
         }
 
         public static string GetAddressesByTown(SoftUniContext context)
@@ -40,7 +80,7 @@ namespace SoftUni
             }
 
             return sb.ToString().TrimEnd();
-        
+
         }
 
         public static string GetEmployee147(SoftUniContext context)
@@ -69,9 +109,9 @@ namespace SoftUni
                 {
                     sb.AppendLine($"{proj.Name}");
                 }
-               
+
             }
-            return sb.ToString().TrimEnd();  
+            return sb.ToString().TrimEnd();
         }
 
         public static string GetEmployeesInPeriod(SoftUniContext context)
@@ -87,10 +127,11 @@ namespace SoftUni
                     EmployeeLastName = x.LastName,
                     ManagerFirstName = x.Manager.FirstName,
                     ManagerLastName = x.Manager.LastName,
-                    Projects = x.EmployeesProjects.Select(p => new { 
-                    projectName = p.Project.Name,
-                    projectStart = p.Project.StartDate,
-                    ProjectEnd = p.Project.EndDate,
+                    Projects = x.EmployeesProjects.Select(p => new
+                    {
+                        projectName = p.Project.Name,
+                        projectStart = p.Project.StartDate,
+                        ProjectEnd = p.Project.EndDate,
                     })
                 })
                 .Take(10)
@@ -106,7 +147,7 @@ namespace SoftUni
                 {
                     var endDate = project.ProjectEnd.HasValue ? project.ProjectEnd.Value.ToString("M/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture) : "not finished";
 
-                        sb.AppendLine($"--{project.projectName} - {project.projectStart.ToString("M/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture)} - {endDate}");
+                    sb.AppendLine($"--{project.projectName} - {project.projectStart.ToString("M/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture)} - {endDate}");
                 }
             }
 
@@ -120,7 +161,7 @@ namespace SoftUni
                 AddressText = "Vitoshka 15",
                 TownId = 4,
             };
-            
+
             context.Addresses.Add(address);
             context.SaveChanges();
 
@@ -153,7 +194,8 @@ namespace SoftUni
         public static string GetEmployeesFullInformation(SoftUniContext context)
         {
             var employees = context.Employees
-                .Select(x => new {
+                .Select(x => new
+                {
                     x.EmployeeId,
                     x.FirstName,
                     x.MiddleName,
