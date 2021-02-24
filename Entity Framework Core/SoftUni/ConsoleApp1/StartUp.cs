@@ -13,8 +13,36 @@ namespace SoftUni
         static void Main(string[] args)
         {
             var softUniContex = new SoftUniContext();
-            var result = GetDepartmentsWithMoreThan5Employees(softUniContex);
+            var result = IncreaseSalaries(softUniContex);
             Console.WriteLine(result);
+        }
+
+        public static string IncreaseSalaries(SoftUniContext context)
+        {
+            var departments = new string[] { "Engineering", "Tool Design", "Marketing", "Information Services" };
+
+            var employees = context.Employees
+                .Where(x => departments.Contains(x.Department.Name))
+                .OrderBy(x => x.FirstName)
+                .ThenBy(x => x.LastName)
+                .ToList();
+
+            foreach (var emp in employees)
+            {
+                emp.Salary *= 1.12m;
+            }
+
+            context.SaveChanges();
+
+            var sb = new StringBuilder();
+
+            foreach (var emp in employees)
+            {
+                sb.AppendLine($"{emp.FirstName} {emp.LastName} (${emp.Salary:F2})");
+            }
+
+            return sb.ToString().TrimEnd();
+
         }
 
         public static string GetDepartmentsWithMoreThan5Employees(SoftUniContext context)
