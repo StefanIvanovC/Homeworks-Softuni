@@ -13,9 +13,42 @@ namespace SoftUni
         static void Main(string[] args)
         {
             var softUniContex = new SoftUniContext();
-            var result = GetEmployeesInPeriod(softUniContex);
+            var result = GetEmployee147(softUniContex);
             Console.WriteLine(result);
         }
+
+        public static string GetEmployee147(SoftUniContext context)
+        {
+            var employeeWithId147 = context.Employees
+                .Where(x => x.EmployeeId == 147)
+                .Select(x => new
+                {
+                    x.FirstName,
+                    x.LastName,
+                    x.JobTitle,
+                    Projects = x.EmployeesProjects.OrderBy(x => x.Project.Name).Select(p => new
+                    {
+                        p.Project.Name
+                    })
+                })
+                .ToList();
+
+            var sb = new StringBuilder();
+
+            foreach (var emp in employeeWithId147)
+            {
+                sb.AppendLine($"{emp.FirstName} {emp.LastName} - {emp.JobTitle}");
+
+                foreach (var proj in emp.Projects)
+                {
+                    sb.AppendLine($"{proj.Name}");
+                }
+               
+            }
+            return sb.ToString().TrimEnd();  
+        }
+
+        //public static string GetAddressesByTown(SoftUniContext context) {}
 
         public static string GetEmployeesInPeriod(SoftUniContext context)
         {
