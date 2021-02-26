@@ -8,6 +8,12 @@ namespace P01_StudentSystem.Data.Models
 {
     public class Student
     {
+        public Student()
+        {
+            this.HomeworkSubmissions = new HashSet<Homework>();
+            this.CourseEnrollments = new HashSet<Course>();
+
+        }
         public int StudentId { get; set; }
 
         [Required]
@@ -20,6 +26,10 @@ namespace P01_StudentSystem.Data.Models
         public DateTime RegisteredOn { get; set; }
 
         public DateTime? BirthDay { get; set; }
+
+        public ICollection<Homework> HomeworkSubmissions { get; set; }
+
+        public ICollection<Course> CourseEnrollments { get; set; }
     }
 }
 // o StudentId
