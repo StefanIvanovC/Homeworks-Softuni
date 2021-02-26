@@ -17,6 +17,15 @@ namespace SoftUni
             Console.WriteLine(result);
         }
 
+
+        // TO DO 15 Exercise - time - 3:19
+        public static string RemoveTown(SoftUniContext context)
+        {
+            var town = context.Towns
+                .FirstOrDefault(x => x.Name == "Seattle")
+
+        }
+
         public static string GetEmployeesByFirstNameStartingWithSa(SoftUniContext context)
         {
             var employeeSA = context.Employees
