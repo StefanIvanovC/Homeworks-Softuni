@@ -11,7 +11,7 @@ namespace P01_StudentSystem.Data.Models
         public Student()
         {
             this.HomeworkSubmissions = new HashSet<Homework>();
-            this.CourseEnrollments = new HashSet<Course>();
+            this.CourseEnrollments = new HashSet<StudentCourse>();
 
         }
         public int StudentId { get; set; }
@@ -25,11 +25,11 @@ namespace P01_StudentSystem.Data.Models
 
         public DateTime RegisteredOn { get; set; }
 
-        public DateTime? BirthDay { get; set; }
+        public DateTime? Birthday { get; set; }
 
         public ICollection<Homework> HomeworkSubmissions { get; set; }
 
-        public ICollection<Course> CourseEnrollments { get; set; }
+        public ICollection<StudentCourse> CourseEnrollments { get; set; }
     }
 }
 // o StudentId

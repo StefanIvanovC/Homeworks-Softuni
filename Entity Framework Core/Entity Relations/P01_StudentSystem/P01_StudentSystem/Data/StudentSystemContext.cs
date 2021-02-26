@@ -20,7 +20,7 @@ namespace P01_StudentSystem.Data
 
         public DbSet<Course> Courses { get; set; }
 
-        public DbSet<Homework> Homeworks { get; set; }
+        public DbSet<Homework> HomeworkSubmissions { get; set; }
 
         public DbSet<Resource> Resources { get; set; }
 
@@ -32,10 +32,20 @@ namespace P01_StudentSystem.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.;DataBase=StudentSystem;IntegratedSecurity=True");
+                optionsBuilder.UseSqlServer("Server=.;DataBase=StudentSystem;Integrated Security = true");
             }
 
             base.OnConfiguring(optionsBuilder);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<StudentCourse>(x =>
+            {
+                x.HasKey(x => new { x.CourseId, x.StudentId });
+            });
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
