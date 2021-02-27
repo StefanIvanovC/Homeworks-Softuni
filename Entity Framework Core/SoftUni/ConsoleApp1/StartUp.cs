@@ -13,12 +13,40 @@ namespace SoftUni
         static void Main(string[] args)
         {
             var softUniContex = new SoftUniContext();
-            var result = RemoveTown(softUniContex);
+            var result = GetLatestProjects(softUniContex);
             Console.WriteLine(result);
         }
 
+        public static string GetLatestProjects(SoftUniContext context)
+        {
+            var last10Projects = context.Projects
+                .OrderByDescending(x => x.StartDate)
+                .Take(10)
+                .Select(x => new
+                {
+                    ProjectName = x.Name,
+                    x.StartDate,
+                    x.Description
+                })
+                .OrderBy(x => x.ProjectName)
+                .ToList();
 
-        // TO DO 15 Exercise - time - 3:19
+            var sb = new StringBuilder();
+
+            foreach (var project in last10Projects)
+            {
+                var startDate = project.StartDate.ToString("M/d/yyyy h:mm:ss tt", CultureInfo.InvariantCulture);
+
+                sb.AppendLine($"{project.ProjectName}");
+                sb.AppendLine($"{project.Description}");
+                sb.AppendLine($"{project.StartDate} AM");
+            }
+
+            return sb.ToString().TrimEnd();
+
+        }
+
+
         public static string RemoveTown(SoftUniContext context)
         {
             var town = context.Towns.Include(x => x.Addresses).FirstOrDefault(x => x.Name == "Seattle");
@@ -45,7 +73,7 @@ namespace SoftUni
             context.SaveChanges();
 
             var result = $"{allAddressIds.Count} addresses in Seattle were deleted";
-            return result; 
+            return result;
 
 
         }
@@ -53,13 +81,13 @@ namespace SoftUni
         public static string GetEmployeesByFirstNameStartingWithSa(SoftUniContext context)
         {
             var employeeSA = context.Employees
-                .Where(x => EF.Functions. Like(x.FirstName, "sa%"))
+                .Where(x => EF.Functions.Like(x.FirstName, "sa%"))
                 .Select(x => new
                 {
-                      x.FirstName,
-                      x.LastName,
-                      x.JobTitle,
-                      x.Salary,
+                    x.FirstName,
+                    x.LastName,
+                    x.JobTitle,
+                    x.Salary,
                 })
                 .OrderBy(x => x.FirstName)
                 .ThenBy(x => x.LastName)
@@ -69,7 +97,7 @@ namespace SoftUni
 
             foreach (var emp in employeeSA)
             {
-                    sb.AppendLine($"{emp.FirstName} {emp.LastName} - {emp.JobTitle} - (${emp.Salary:F2})");
+                sb.AppendLine($"{emp.FirstName} {emp.LastName} - {emp.JobTitle} - (${emp.Salary:F2})");
             }
 
             return sb.ToString().TrimEnd();
@@ -127,7 +155,7 @@ namespace SoftUni
                      .ToList()
                 })
                 .ToList();
-        
+
 
             var sb = new StringBuilder();
 
