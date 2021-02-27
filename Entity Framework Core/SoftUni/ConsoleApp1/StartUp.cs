@@ -25,7 +25,7 @@ namespace SoftUni
             var allAddressIds = town.Addresses.Select(x => x.AddressId).ToList();
 
             var employees = context.Employees
-                .Where(x => allAddressIds.Contains(x.AddressId.Value))
+                .Where(x => x.AddressId.HasValue && allAddressIds.Contains(x.AddressId.Value))
                 .ToList();
 
             foreach (var employee in employees)
