@@ -13,7 +13,7 @@ namespace SoftUni
         static void Main(string[] args)
         {
             var softUniContex = new SoftUniContext();
-            var result = GetEmployeesByFirstNameStartingWithSa(softUniContex);
+            var result = RemoveTown(softUniContex);
             Console.WriteLine(result);
         }
 
@@ -21,8 +21,32 @@ namespace SoftUni
         // TO DO 15 Exercise - time - 3:19
         public static string RemoveTown(SoftUniContext context)
         {
-            var town = context.Towns
-                .FirstOrDefault(x => x.Name == "Seattle")
+            var town = context.Towns.Include(x => x.Addresses).FirstOrDefault(x => x.Name == "Seattle");
+            var allAddressIds = town.Addresses.Select(x => x.AddressId).ToList();
+
+            var employees = context.Employees
+                .Where(x => allAddressIds.Contains(x.AddressId.Value))
+                .ToList();
+
+            foreach (var employee in employees)
+            {
+                employee.AddressId = null;
+            }
+
+            context.SaveChanges();
+
+            foreach (var addressId in allAddressIds)
+            {
+                var address = context.Addresses.FirstOrDefault(x => x.AddressId == addressId);
+                context.Addresses.Remove(address);
+            }
+            context.Towns.Remove(town);
+
+            context.SaveChanges();
+
+            var result = $"{allAddressIds.Count} addresses in Seattle were deleted";
+            return result; 
+
 
         }
 
