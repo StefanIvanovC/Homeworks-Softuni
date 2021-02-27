@@ -13,8 +13,46 @@ namespace SoftUni
         static void Main(string[] args)
         {
             var softUniContex = new SoftUniContext();
-            var result = GetLatestProjects(softUniContex);
+            var result = DeleteProjectById(softUniContex);
             Console.WriteLine(result);
+        }
+
+        //TO DO remove project id 2; return 10 
+        public static string DeleteProjectById(SoftUniContext context)
+        {
+            var proj2 = context.EmployeesProjects
+                .FirstOrDefault(x => x.ProjectId == 2);
+
+                context.Projects.Remove(proj2);
+            
+
+            var projectId2 = context.Projects
+                .Where(x => x.ProjectId == 2)
+                .Select(x => new
+                {
+                    x.Name,
+                })
+                .Take(10)
+                .ToList();
+
+            var emp = context.EmployeesProjects
+                .Select(x => x.ProjectId == 2)
+                .ToList();
+
+            foreach (var empl in emp)
+            {
+                
+            }
+
+            var sb = new StringBuilder();
+
+            foreach (var project in projects)
+            {
+                sb.AppendLine($"{project.Name}");
+            }
+
+            return sb.ToString().TrimEnd();
+
         }
 
         public static string GetLatestProjects(SoftUniContext context)
