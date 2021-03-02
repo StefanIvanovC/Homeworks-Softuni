@@ -13,46 +13,8 @@ namespace SoftUni
         static void Main(string[] args)
         {
             var softUniContex = new SoftUniContext();
-            var result = DeleteProjectById(softUniContex);
+            var result = GetLatestProjects(softUniContex);
             Console.WriteLine(result);
-        }
-
-        //TO DO remove project id 2; return 10 
-        public static string DeleteProjectById(SoftUniContext context)
-        {
-            var proj2 = context.EmployeesProjects
-                .FirstOrDefault(x => x.ProjectId == 2);
-
-                context.Projects.Remove(proj2);
-            
-
-            var projectId2 = context.Projects
-                .Where(x => x.ProjectId == 2)
-                .Select(x => new
-                {
-                    x.Name,
-                })
-                .Take(10)
-                .ToList();
-
-            var emp = context.EmployeesProjects
-                .Select(x => x.ProjectId == 2)
-                .ToList();
-
-            foreach (var empl in emp)
-            {
-                
-            }
-
-            var sb = new StringBuilder();
-
-            foreach (var project in projects)
-            {
-                sb.AppendLine($"{project.Name}");
-            }
-
-            return sb.ToString().TrimEnd();
-
         }
 
         public static string GetLatestProjects(SoftUniContext context)
@@ -77,13 +39,43 @@ namespace SoftUni
 
                 sb.AppendLine($"{project.ProjectName}");
                 sb.AppendLine($"{project.Description}");
-                sb.AppendLine($"{project.StartDate} AM");
+                sb.AppendLine($"{startDate}");
             }
 
             return sb.ToString().TrimEnd();
 
         }
 
+        public static string DeleteProjectById(SoftUniContext context)
+        {
+
+            var projectsForDelete = context.Projects.Find(2);
+
+            var EmpProjects = context.EmployeesProjects
+                .Where(x => x.ProjectId == 2)
+                .ToList();
+
+            context.EmployeesProjects.RemoveRange(EmpProjects);
+
+            context.Projects.Remove(projectsForDelete);
+
+            context.SaveChanges();
+
+            var projects = context.Projects
+                .Take(10)
+                .Select(p => p.Name)
+                .ToList();
+
+            var sb = new StringBuilder();
+
+            foreach (var project in projects)
+            {
+                sb.AppendLine($"{project}");
+            }
+
+            return sb.ToString().TrimEnd();
+
+        }
 
         public static string RemoveTown(SoftUniContext context)
         {
