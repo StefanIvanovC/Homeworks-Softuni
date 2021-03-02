@@ -7,6 +7,11 @@ namespace MusicHub.Data.Models
 {
     public class Producer
     {
+        public Producer()
+        {
+            this.Albums = new HashSet<Album>();
+        }
+
         public int Id { get; set; }
 
         [Required]

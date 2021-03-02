@@ -8,6 +8,11 @@ namespace MusicHub.Data.Models
 {
     public class Album
     {
+        public Album()
+        {
+            this.Songs = new HashSet<Song>();
+        }
+
         public int Id { get; set; }
 
         [Required]
@@ -16,7 +21,7 @@ namespace MusicHub.Data.Models
 
         public DateTime ReleaseDate { get; set; }
 
-        public int Price
+        public decimal Price
             => this.Songs.Sum(x => x.Price); //the price in Song entity is DECIMAL here is int!! CHECK IT
 
         public int? ProducerId { get; set; }
