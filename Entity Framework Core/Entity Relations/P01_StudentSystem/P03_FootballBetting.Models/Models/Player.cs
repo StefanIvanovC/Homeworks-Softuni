@@ -23,8 +23,5 @@ namespace P03_FootballBetting.Data.Models
         public int IsInjured { get; set; }
 
         public ICollection<PlayerStatistic> playerStatistics { get; set; }
-
-        //colection playerStatistics
-
     }
 }

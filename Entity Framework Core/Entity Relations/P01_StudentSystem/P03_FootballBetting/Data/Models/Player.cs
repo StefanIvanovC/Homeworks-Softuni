@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+
 
 namespace P03_FootballBetting.Data.Models
 {
@@ -20,11 +19,8 @@ namespace P03_FootballBetting.Data.Models
 
         public Position Position { get; set; }
 
-        public int IsInjured { get; set; }
+        public bool IsInjured { get; set; }
 
-        public ICollection<PlayerStatistic> playerStatistics { get; set; }
-
-        //colection playerStatistics
-
+        public ICollection<PlayerStatistic> PlayerStatistics { get; set; }
     }
 }

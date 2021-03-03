@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using P03_FootballBetting.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace P03_FootballBetting.Data
 {
@@ -13,6 +10,7 @@ namespace P03_FootballBetting.Data
         }
 
         public FootballBettingContext(DbContextOptions options)
+            : base(options)
         {
         }
 
@@ -40,7 +38,7 @@ namespace P03_FootballBetting.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.;Database=Football;Integrated Sequrity=true");
+                optionsBuilder.UseSqlServer("Server=.;Database=Football;Integrated Security=true");
             }
             base.OnConfiguring(optionsBuilder);
         }

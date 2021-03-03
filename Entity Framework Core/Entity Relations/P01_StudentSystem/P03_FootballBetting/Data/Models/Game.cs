@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace P03_FootballBetting.Data.Models
 {
@@ -31,10 +30,8 @@ namespace P03_FootballBetting.Data.Models
 
         public int Result { get; set; }
 
-        public ICollection<PlayerStatistic> playerStatistics { get; set; }
+        public ICollection<PlayerStatistic> PlayerStatistics { get; set; }
 
         public ICollection<Bet> Bets { get; set; }
-
-        //collection of bets
     }
 }

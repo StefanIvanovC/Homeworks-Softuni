@@ -34,7 +34,5 @@ namespace P03_FootballBetting.Data.Models
         public ICollection<PlayerStatistic> playerStatistics { get; set; }
 
         public ICollection<Bet> Bets { get; set; }
-
-        //collection of bets
     }
 }
