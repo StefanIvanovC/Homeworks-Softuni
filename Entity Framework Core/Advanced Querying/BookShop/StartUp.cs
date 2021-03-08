@@ -16,9 +16,36 @@
             using var db = new BookShopContext();
             DbInitializer.ResetDatabase(db);
 
-            Console.WriteLine(GetAuthorNamesEndingIn(db, "dy"));
+            Console.WriteLine(GetBooksByAuthor(db, "R"));
         }
 
+        public static string GetBooksByAuthor(BookShopContext context, string input)
+        {
+            var author = context.Books
+                .Where(book => EF.Functions.Like(book.Author.LastName, $"{input}%"))
+                .Select(book => new
+                {
+                    book.Title,
+                    book.Author.FirstName,
+                    book.Author.LastName,
+                    AuthorName = book.Author.FirstName + " " + book.Author.LastName,
+                    book.AuthorId
+
+                })
+                .OrderBy(book => book.AuthorId)
+                .ToList();
+
+            var result = string.Join(Environment.NewLine, author
+                .Select(book => $"{book.Title} ({book.AuthorName})"));
+
+            return result;
+
+        }
+
+        public static string GetBookTitlesContaining(BookShopContext context, string input)
+        {
+            return "a";
+        }
 
         public static string GetAuthorNamesEndingIn(BookShopContext context, string input)
         {
@@ -26,8 +53,6 @@
                 .Where(x => x.FirstName.EndsWith(input))
                 .Select(x => new
                 {
-                    FirstName = x.FirstName,
-                    LastName = x.LastName,
                     FullName = x.FirstName + " " + x.LastName
                 })
                 .OrderBy(x => x.FullName)
@@ -37,7 +62,7 @@
 
             foreach (var aut in author)
             {
-                sb.AppendLine($"");
+                sb.AppendLine($"{aut.FullName}");
             }
 
             return sb.ToString().TrimEnd();
