@@ -5,6 +5,7 @@
     using Initializer;
     using Microsoft.EntityFrameworkCore;
     using System;
+    using System.Globalization;
     using System.Linq;
     using System.Text;
 
@@ -15,9 +16,58 @@
             using var db = new BookShopContext();
             DbInitializer.ResetDatabase(db);
 
-            Console.WriteLine(GetBooksByCategory(db, "horror mystery drama"));
+            Console.WriteLine(GetAuthorNamesEndingIn(db, "dy"));
         }
 
+
+        public static string GetAuthorNamesEndingIn(BookShopContext context, string input)
+        {
+            var author = context.Authors
+                .Where(x => x.FirstName.EndsWith(input))
+                .Select(x => new
+                {
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    FullName = x.FirstName + " " + x.LastName
+                })
+                .OrderBy(x => x.FullName)
+                .ToList();
+
+            var sb = new StringBuilder();
+
+            foreach (var aut in author)
+            {
+                sb.AppendLine($"");
+            }
+
+            return sb.ToString().TrimEnd();
+        }
+
+        public static string GetBooksReleasedBefore(BookShopContext context, string date)
+        {
+            var targetDate = DateTime.ParseExact(date, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+
+            var books = context.Books
+                .Where(x => x.ReleaseDate.Value < targetDate)
+                .Select(x => new
+                {
+                    Title = x.Title,
+                    EditionType = x.EditionType,
+                    Price = x.Price,
+                    ReleaseDay = x.ReleaseDate.Value
+                })
+                .OrderByDescending(x => x.ReleaseDay)
+                .ToList();
+
+            var sb = new StringBuilder();
+
+            foreach (var book in books)
+            {
+                sb.AppendLine($"{book.Title} - {book.EditionType} - ${book.Price:F2}");
+            }
+
+            return sb.ToString().TrimEnd();
+        }
 
         public static string GetBooksByCategory(BookShopContext context, string input)
         {
