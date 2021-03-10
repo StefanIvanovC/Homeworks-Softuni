@@ -16,7 +16,7 @@
             using var db = new BookShopContext();
             DbInitializer.ResetDatabase(db);
 
-            Console.WriteLine(RemoveBooks(db));
+            IncreasePrices(db);
         }
 
         public static int RemoveBooks(BookShopContext context)
