@@ -16,9 +16,26 @@
             using var db = new BookShopContext();
             DbInitializer.ResetDatabase(db);
 
-            Console.WriteLine(CountCopiesByAuthor(db)); 
+            Console.WriteLine(GetTotalProfitByCategory(db)); 
         }
 
+        public static string GetTotalProfitByCategory(BookShopContext context)
+        {
+            var categoryes = context.Categories
+                .Select(x => new
+                {
+                    x.Name,
+                    Profit = x.CategoryBooks.Sum(b => b.Book.Price * b.Book.Copies)
+                })
+                .OrderByDescending(x => x.Profit)
+                .ThenBy(x => x.Name)
+                .ToList();
+
+            var result = string.Join(Environment.NewLine, categoryes
+                .Select(categoryes => $"{categoryes.Name} ${categoryes.Profit:F2}"));
+
+            return result;
+        }
         public static string CountCopiesByAuthor(BookShopContext context)
         {
             var autors = context.Authors
