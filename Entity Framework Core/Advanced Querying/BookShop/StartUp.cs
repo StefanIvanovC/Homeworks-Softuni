@@ -16,7 +16,7 @@
             using var db = new BookShopContext();
             DbInitializer.ResetDatabase(db);
 
-            IncreasePrices(db);
+            Console.WriteLine($"There are {CountBooks(db, 12)} books with longer title than {12} symbols"); ;
         }
 
         public static int RemoveBooks(BookShopContext context)
@@ -121,18 +121,18 @@
         }
 
 
-        //public static int CountBooks(BookShopContext context, int lengthCheck)
-        //{
-        //    var books = context.Books
-        //        .Where(x => x.Title.Length > lengthCheck)
-        //        .Select(x => new
-        //        {
-        //            CountOfBooks = x.Title.Count()
-        //        })
-        //        .ToList();
+        public static int CountBooks(BookShopContext context, int lengthCheck)
+        {
+            var books = context.Books
+                .Where(x => x.Title.Length > lengthCheck)
+                .Select(x => new
+                {
+                    CountOfBooks = x.Title.Count()
+                })
+                .ToList();
 
-        //    return books;
-        //}
+            return books.Count();
+        }
 
         public static string GetBooksByAuthor(BookShopContext context, string input)
         {
