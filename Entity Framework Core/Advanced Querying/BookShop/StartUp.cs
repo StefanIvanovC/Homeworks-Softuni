@@ -16,8 +16,43 @@
             using var db = new BookShopContext();
             DbInitializer.ResetDatabase(db);
 
-            Console.WriteLine(GetBooksByAuthor(db, "R"));
+            Console.WriteLine(CountCopiesByAuthor(db)); 
         }
+
+        public static string CountCopiesByAuthor(BookShopContext context)
+        {
+            var autors = context.Authors
+                .Select(x => new
+                {
+                    x.FirstName,
+                    x.LastName,
+                    TotalCopies = x.Books.Sum(b => b.Copies)
+                })
+                .OrderByDescending(x => x.TotalCopies)
+                .ToList();
+            var sb = new StringBuilder();
+
+            foreach (var aut in autors)
+            {
+                sb.AppendLine($"{aut.FirstName} {aut.LastName} - {aut.TotalCopies}");
+            }
+
+            return sb.ToString().TrimEnd();
+        }
+
+
+        //public static int CountBooks(BookShopContext context, int lengthCheck)
+        //{
+        //    var books = context.Books
+        //        .Where(x => x.Title.Length > lengthCheck)
+        //        .Select(x => new
+        //        {
+        //            CountOfBooks = x.Title.Count()
+        //        })
+        //        .ToList();
+
+        //    return books;
+        //}
 
         public static string GetBooksByAuthor(BookShopContext context, string input)
         {
@@ -42,10 +77,22 @@
 
         }
 
-        public static string GetBookTitlesContaining(BookShopContext context, string input)
-        {
-            return "a";
-        }
+        //public static string GetBookTitlesContaining(BookShopContext context, string input)
+        //{
+        //    var titlesOfBooks = input.Split(' ', StringSplitOptions.RemoveEmptyEntries)
+        //        .Select(x => x.ToLower())
+        //        .ToArray();
+
+        //    var books = context.Books
+        //                        //.Any(category => categories.Contains(category.Category.Name.ToLower())))b 
+        //       .Where(context.Books
+        //       x => x.Any(x => titlesOfBooks.Contains(x.Title.ToLower())))
+        //       .Select(x => x.Title)
+        //       .OrderBy(title => title)
+        //       .ToArray();
+
+        //    return "a";
+        //}
 
         public static string GetAuthorNamesEndingIn(BookShopContext context, string input)
         {
