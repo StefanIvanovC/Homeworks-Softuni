@@ -16,7 +16,35 @@
             using var db = new BookShopContext();
             DbInitializer.ResetDatabase(db);
 
-            Console.WriteLine(GetMostRecentBooks(db)); 
+            Console.WriteLine(RemoveBooks(db));
+        }
+
+        public static int RemoveBooks(BookShopContext context)
+        {
+            var books = context.Books
+                .Where(x => x.Copies < 4200)
+                .ToList();
+
+            context.Books.RemoveRange(books);
+
+            context.SaveChanges();
+
+            return books.Count();
+        }
+
+        public static void IncreasePrices(BookShopContext context)
+        {
+            var books = context.Books
+                .Where(x => x.ReleaseDate.Value.Year < 2010)
+                .ToList();
+
+            foreach (var book in books)
+            {
+                book.Price += 5;
+            }
+
+            context.SaveChanges();
+
         }
 
         public static string GetMostRecentBooks(BookShopContext context)
