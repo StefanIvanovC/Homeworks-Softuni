@@ -16,7 +16,7 @@
             using var db = new BookShopContext();
             DbInitializer.ResetDatabase(db);
 
-            Console.WriteLine($"There are {CountBooks(db, 12)} books with longer title than {12} symbols"); ;
+            Console.WriteLine(GetBookTitlesContaining(db, "sK"));
         }
 
         public static int RemoveBooks(BookShopContext context)
@@ -99,6 +99,7 @@
 
             return result;
         }
+
         public static string CountCopiesByAuthor(BookShopContext context)
         {
             var autors = context.Authors
@@ -119,7 +120,6 @@
 
             return sb.ToString().TrimEnd();
         }
-
 
         public static int CountBooks(BookShopContext context, int lengthCheck)
         {
@@ -157,22 +157,25 @@
 
         }
 
-        //public static string GetBookTitlesContaining(BookShopContext context, string input)
-        //{
-        //    var titlesOfBooks = input.Split(' ', StringSplitOptions.RemoveEmptyEntries)
-        //        .Select(x => x.ToLower())
-        //        .ToArray();
+        public static string GetBookTitlesContaining(BookShopContext context, string input)
+        {
+            var stringForCheck = input;
 
-        //    var books = context.Books
-        //                        //.Any(category => categories.Contains(category.Category.Name.ToLower())))b 
-        //       .Where(context.Books
-        //       x => x.Any(x => titlesOfBooks.Contains(x.Title.ToLower())))
-        //       .Select(x => x.Title)
-        //       .OrderBy(title => title)
-        //       .ToArray();
+            var books = context.Books
+                .Where(book => book.Title.ToLower().Contains(stringForCheck.ToLower()))
+                .Select(b => b.Title)
+                .OrderBy(b => b)
+                .ToList();
 
-        //    return "a";
-        //}
+            var sb = new StringBuilder();
+
+            foreach (var book in books)
+            {
+                sb.AppendLine($"{book}");
+            }
+
+            return sb.ToString().TrimEnd();
+        }
 
         public static string GetAuthorNamesEndingIn(BookShopContext context, string input)
         {
