@@ -20,11 +20,50 @@ namespace ProductShop
             productShopContext.Database.EnsureDeleted();
             productShopContext.Database.EnsureCreated();
             
-            string inputJson = File.ReadAllText("../../../Datasets/users.json");
-            var result = ImportProducts(productShopContext, inputJson);
+            string inputJsonUsers = File.ReadAllText("../../../Datasets/users.json");
+            string inputJsonProducts = File.ReadAllText("../../../Datasets/products.json");
+            string inputJsonCategories = File.ReadAllText("../../../Datasets/categories.json");
+            string inputJsonCategoriesProducts = File.ReadAllText("../../../Datasets/categories-products.json");
+
+            var resultUsers = ImportUsers(productShopContext, inputJsonUsers);
+            var resultProducts = ImportProducts(productShopContext, inputJsonProducts);
+            var resultCategories = ImportCategories(productShopContext, inputJsonCategories);
+            var resultCategoriesProducts = ImportCategoryProducts(productShopContext, inputJsonCategoriesProducts);
+
+            var result = resultCategories;
 
             Console.WriteLine(result);
         }
+
+        public static string ImportCategoryProducts(ProductShopContext context, string inputJson) 
+        {
+            InitializeAutoMapper();
+
+            var dtoCategoryProducts = JsonConvert.DeserializeObject<IEnumerable<CategoryProductInputModel>>(inputJson);
+
+            var CatProdMapper = mapper.Map<IEnumerable<CategoryProduct>>(dtoCategoryProducts);
+
+            context.AddRange(CatProdMapper);
+            context.SaveChanges();
+
+            return $"Successfully imported {CatProdMapper.Count()}";
+        } //04.ImportCategoriesProducts
+
+        public static string ImportCategories(ProductShopContext context, string inputJson)
+        {
+            InitializeAutoMapper();
+
+            var dboCategories = JsonConvert
+                .DeserializeObject<IEnumerable<CategoryInputModel>>(inputJson)
+                .Where(x => x.Name != null);
+
+            var categoryMap = mapper.Map<IEnumerable<Category>>(dboCategories);
+
+            context.AddRange(categoryMap);
+            context.SaveChanges();
+
+            return $"Successfully imported {categoryMap.Count()}";
+        } // 03.ImportCategories
 
         public static string ImportProducts(ProductShopContext context, string inputJson) // 02.ImportProducts
         {
@@ -63,4 +102,5 @@ namespace ProductShop
             mapper = config.CreateMapper();
         }
     }
+
 }
