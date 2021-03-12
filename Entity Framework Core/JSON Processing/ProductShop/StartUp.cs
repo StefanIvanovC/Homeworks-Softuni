@@ -30,9 +30,36 @@ namespace ProductShop
             //var resultCategories = ImportCategories(productShopContext, inputJsonCategories);
             //var resultCategoriesProducts = ImportCategoryProducts(productShopContext, inputJsonCategoriesProducts);
 
-           var result = GetProductsInRange(productShopContext);
+           var result = GetSoldProducts(productShopContext);
 
             Console.WriteLine(result);
+        }
+
+        public static string GetSoldProducts(ProductShopContext context)
+        {
+            var products = context.Users
+                .Where(x => x.ProductsSold.Any(p => p.BuyerId != null))
+                .Select(x => new
+                {
+                    firstName = x.FirstName,
+                    lastName = x.LastName,
+                    soldProducts = x.ProductsSold.Where(p => p.BuyerId != null).Select(b => new
+                    {
+                        name = b.Name,
+                        price = b.Price,
+                        buyerFirstName = b.Buyer.FirstName,
+                        buyerLastName = b.Buyer.LastName
+
+                    })
+                    .ToList()
+                })
+                .OrderBy(x => x.lastName)
+                .ThenBy(x => x.firstName)
+                .ToList();
+
+            var jsonResult = JsonConvert.SerializeObject(products, Formatting.Indented);
+
+            return jsonResult;
         }
 
         public static string GetProductsInRange(ProductShopContext context) // 05.Export
