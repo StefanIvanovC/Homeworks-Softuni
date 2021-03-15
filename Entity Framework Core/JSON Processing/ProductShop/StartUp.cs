@@ -30,12 +30,48 @@ namespace ProductShop
             //var resultCategories = ImportCategories(productShopContext, inputJsonCategories);
             //var resultCategoriesProducts = ImportCategoryProducts(productShopContext, inputJsonCategoriesProducts);
 
-           var result = GetSoldProducts(productShopContext);
+           var result = GetCategoriesByProductsCount(productShopContext);
 
-            Console.WriteLine(result);
+           Console.WriteLine(result);
         }
 
-        public static string GetSoldProducts(ProductShopContext context)
+        //public static string GetUsersWithProducts(ProductShopContext context)
+        //{
+        //    var users = context.Users
+        //        .Where(u => u.ProductsSold.Any(p => p.BuyerId != null))
+        //        .Select(x => new 
+        //        {
+        //            lastName = x.LastName, 
+        //            age = x.Age,
+        //            soldProducts = x.ProductsSold.Where(p => p.BuyerId != null).Select(b => new 
+        //            {
+        //                count = b.
+
+        //            })
+        //        })
+        //}
+
+        public static string GetCategoriesByProductsCount(ProductShopContext context) 
+        {
+            var categories = context.Categories
+                .Select(x => new
+                {
+                    category = x.Name,
+                    productsCount = x.CategoryProducts.Count(),
+                    averagePrice = x.CategoryProducts.Count() == 0 ?
+                                 0.ToString(): 
+                                 x.CategoryProducts.Average(p => p.Product.Price).ToString("F2"),
+                    totalRevenue = x.CategoryProducts.Sum(p => p.Product.Price).ToString("F2")
+                })
+                .OrderByDescending(x => x.productsCount)
+                .ToList();
+
+            var jsonresult = JsonConvert.SerializeObject(categories, Formatting.Indented);
+
+            return jsonresult;
+        }
+
+        public static string GetSoldProducts(ProductShopContext context) //Query 6. Export Successfully Sold Products
         {
             var products = context.Users
                 .Where(x => x.ProductsSold.Any(p => p.BuyerId != null))
