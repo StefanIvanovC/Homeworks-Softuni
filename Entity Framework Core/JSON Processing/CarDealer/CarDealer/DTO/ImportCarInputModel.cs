@@ -1,0 +1,30 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace CarDealer.DTO
+{
+    public class ImportCarInputModel
+    {
+        public string Make { get; set; }
+
+        public string Model { get; set; }
+
+        public long TravelledDistance { get; set; }
+
+        public IEnumerable<int> PartsId { get; set; }
+    }
+}
+
+
+//"make": "Citroen",
+//    "model": "Elysée",
+//    "travelledDistance": 277281794,
+//    "partsId": [
+//      85,
+//      41,
+//      2,
+//      62,
+//      74,
+//      116
+//    ]

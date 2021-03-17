@@ -21,15 +21,49 @@ namespace CarDealer
             context.Database.EnsureCreated();
 
             var jsonSuppliers = File.ReadAllText("../../../Datasets/suppliers.json");
+            var jsonParts = File.ReadAllText("../../../Datasets/parts.json");
             var jsonCars = File.ReadAllText("../../../Datasets/cars.json");
 
-
-            var result = ImportParts(context, jsonCars);
+            var result = ImportCars(context, jsonCars);
 
             Console.WriteLine(result);
         }
 
-        public static string ImportParts(CarDealerContext context, string inputJson)
+        public static string ImportCars(CarDealerContext context, string inputJson) // Query 10. Import Cars
+        {
+            var cars = JsonConvert
+                .DeserializeObject<IEnumerable<ImportCarInputModel>>(inputJson);
+
+            var listOfCars = new List<Car>(); 
+
+            foreach (var car in cars)
+            {
+                var currentCar = new Car
+                {
+                    Make = car.Make,
+                    Model = car.Model,
+                    TravelledDistance = car.TravelledDistance
+                };
+
+                foreach (var partId in car?.PartsId.Distinct())
+                {
+                    currentCar.PartCars.Add(new PartCar
+                    {
+                        PartId = partId
+                    });
+                }
+
+                listOfCars.Add(currentCar);
+            }
+
+            context.Cars.AddRange(listOfCars);
+            context.SaveChanges();
+
+            return $"Successfully imported {cars.Count()}.";
+
+        }
+
+        public static string ImportParts(CarDealerContext context, string inputJson) // Query 9. Import Parts
         {
             var suppliersId = context.Suppliers
                 .Select(x => x.Id)
@@ -45,7 +79,7 @@ namespace CarDealer
 
             return $"Successfully imported {parts.Count}.";
 
-        }
+        } 
 
         public static string ImportSuppliers(CarDealerContext context, string inputJson) 
         {
@@ -63,7 +97,7 @@ namespace CarDealer
             context.SaveChanges();
 
             return $"Successfully imported {suppliers.Count}.";
-        }
+        } // Query 8. Import Suppliers
 
         //private static void InitializeAutoMapper()
         //{
