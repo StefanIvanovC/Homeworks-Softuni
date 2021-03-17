@@ -19,7 +19,7 @@ namespace ProductShop
             var productShopContext = new ProductShopContext();
             //productShopContext.Database.EnsureDeleted();
             //productShopContext.Database.EnsureCreated();
-            
+
             //string inputJsonUsers = File.ReadAllText("../../../Datasets/users.json");
             //string inputJsonProducts = File.ReadAllText("../../../Datasets/products.json");
             //string inputJsonCategories = File.ReadAllText("../../../Datasets/categories.json");
@@ -30,28 +30,47 @@ namespace ProductShop
             //var resultCategories = ImportCategories(productShopContext, inputJsonCategories);
             //var resultCategoriesProducts = ImportCategoryProducts(productShopContext, inputJsonCategoriesProducts);
 
-           var result = GetCategoriesByProductsCount(productShopContext);
+            var result = GetUsersWithProducts(productShopContext);
 
-           Console.WriteLine(result);
+            Console.WriteLine(result);
         }
+
+        // Query 7. Export Users and Products SOME BUGGY TASK
 
         //public static string GetUsersWithProducts(ProductShopContext context)
         //{
         //    var users = context.Users
         //        .Where(u => u.ProductsSold.Any(p => p.BuyerId != null))
-        //        .Select(x => new 
+        //        .Select(u => new
         //        {
-        //            lastName = x.LastName, 
-        //            age = x.Age,
-        //            soldProducts = x.ProductsSold.Where(p => p.BuyerId != null).Select(b => new 
+        //            lastName = u.LastName,
+        //            age = u.Age,
+        //            soldProducts = new
         //            {
-        //                count = b.
-
-        //            })
+        //                count = u.ProductsSold.Count(),
+        //                products = u.ProductsSold.Where(p => p.BuyerId != null).Select(p => new
+        //                {
+        //                    name = p.Name,
+        //                    price = p.Price
+        //                })
+        //            }
         //        })
-        //}
+        //        .OrderByDescending(x => x.soldProducts.Count())
+        //        .ToList();
 
-        public static string GetCategoriesByProductsCount(ProductShopContext context) 
+        //    var resultObject = new
+        //    {
+        //        usersCount = context.Users.Count(),
+        //        users = users
+        //    };
+
+        //    var resultJson = JsonConvert.SerializeObject(resultObject);
+
+        //    return resultObject;
+
+        //{
+
+        public static string GetCategoriesByProductsCount(ProductShopContext context)
         {
             var categories = context.Categories
                 .Select(x => new
@@ -59,7 +78,7 @@ namespace ProductShop
                     category = x.Name,
                     productsCount = x.CategoryProducts.Count(),
                     averagePrice = x.CategoryProducts.Count() == 0 ?
-                                 0.ToString(): 
+                                 0.ToString() :
                                  x.CategoryProducts.Average(p => p.Product.Price).ToString("F2"),
                     totalRevenue = x.CategoryProducts.Sum(p => p.Product.Price).ToString("F2")
                 })
@@ -116,7 +135,7 @@ namespace ProductShop
             return result;
         }
 
-        public static string ImportCategoryProducts(ProductShopContext context, string inputJson) 
+        public static string ImportCategoryProducts(ProductShopContext context, string inputJson)
         {
             InitializeAutoMapper();
 
