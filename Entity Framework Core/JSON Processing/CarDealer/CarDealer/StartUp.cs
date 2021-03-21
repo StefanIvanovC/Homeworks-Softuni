@@ -23,10 +23,21 @@ namespace CarDealer
             var jsonSuppliers = File.ReadAllText("../../../Datasets/suppliers.json");
             var jsonParts = File.ReadAllText("../../../Datasets/parts.json");
             var jsonCars = File.ReadAllText("../../../Datasets/cars.json");
+            var jsoncustomers = File.ReadAllText("../../../Datasets/customers.json");
 
-            var result = ImportCars(context, jsonCars);
+
+            var result = ImportCustomers(context, jsoncustomers);
 
             Console.WriteLine(result);
+        }
+
+        public static string ImportCustomers(CarDealerContext context, string inputJson) // Query 12. Import Sales
+        {
+            var customers = JsonConvert
+                .DeserializeObject<IEnumerable<Customer>>(inputJson)
+                .ToList();
+
+            return $"Successfully imported {customers.Count}.";
         }
 
         public static string ImportCars(CarDealerContext context, string inputJson) // Query 10. Import Cars

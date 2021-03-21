@@ -11,7 +11,6 @@ namespace P01_StudentSystem.Data.Models
         {
             this.HomeworkSubmissions = new HashSet<Homework>();
             this.Resources = new HashSet<Resource>();
-            this.StudentsEnrolled = new HashSet<StudentCourse>();
         }
 
         public int CourseId { get; set; }

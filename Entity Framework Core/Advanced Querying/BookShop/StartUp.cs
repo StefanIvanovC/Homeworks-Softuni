@@ -157,12 +157,12 @@
 
         }
 
-        public static string GetBookTitlesContaining(BookShopContext context, string input)
+        public static string GetBookTitlesContaining(BookShopContext context, string input) //5
         {
-            var stringForCheck = input;
+            var stringForCheck = input; //5
 
-            var books = context.Books
-                .Where(book => book.Title.ToLower().Contains(stringForCheck.ToLower()))
+            var books = context.Books 
+                .Where(book => book.Title.ToLower().Contains(stringForCheck.ToLower())) // 
                 .Select(b => b.Title)
                 .OrderBy(b => b)
                 .ToList();
