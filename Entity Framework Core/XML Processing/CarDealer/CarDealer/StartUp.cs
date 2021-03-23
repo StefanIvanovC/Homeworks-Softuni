@@ -20,13 +20,64 @@ namespace CarDealer
             var supplierXmltext = File.ReadAllText("./Datasets/suppliers.xml");
             var partsXmltext = File.ReadAllText("./Datasets/parts.xml");
             var carsXmltexl = File.ReadAllText(".//Datasets/cars.xml");
+            var salesXmlText = File.ReadAllText(".//Datasets/cars.xml");
+            var customersXmlText = File.ReadAllText(".//Datasets/customers.xml");
 
-            var result = ImportCars(context, carsXmltexl);
+            var result = ImportSales(context, salesXmlText);
 
             System.Console.WriteLine(result);
 
         }
 
+
+        public static string ImportCustomers(CarDealerContext context, string inputXml)
+        {
+            var root = "Customers";
+
+            var customerDto = XmlConverter.Deserializer<CustomerInputModel>(inputXml, root);
+
+            var customers = customerDto
+                .Select(x => new Customer
+                {
+                    Name = x.Name,
+                    BirthDate = x.BirthDate,
+                    IsYoungDriver = x.IsYoungDriver
+                })
+                .ToList();
+
+            context.AddRange(customers);
+            context.SaveChanges();
+
+            return $"Successfully imported {customers.Count}";
+        }
+
+
+        public static string ImportSales(CarDealerContext context, string inputXml)
+        {
+            var root = "Sales";
+
+            var saleDto = XmlConverter.Deserializer<SalesInputModel>(inputXml, root);
+
+            //ToDO wHERE CARID IS NOT MISSING
+            var carsId = context.Cars
+                .Select(x => x.Id)
+                .ToList();
+
+            var sales = saleDto
+                .Where(x => carsId.Contains(x.CarId))
+                .Select(x => new Sale
+                {
+                    CarId = x.CarId,
+                    CustomerId = x.CustomerId,
+                    Discount = x.Discount
+                })
+                .ToList();
+
+            context.AddRange(sales);
+            context.SaveChanges();
+
+            return $"Successfully imported {sales.Count()}";
+        }
 
         public static string ImportCars(CarDealerContext context, string inputXml) 
         {
@@ -34,7 +85,9 @@ namespace CarDealer
 
             var carDto = XmlConverter.Deserializer<CarInputModel>(inputXml, root);
 
-            var allParts = context.Parts.Select(p => p.Id).ToList();
+            var allParts = context.Parts
+                .Select(p => p.Id)
+                .ToList();
 
             var cars = carDto
                 .Select(x => new Car
