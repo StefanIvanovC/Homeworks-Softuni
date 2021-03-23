@@ -1,6 +1,7 @@
 ﻿using CarDealer.Data;
 using CarDealer.DataTransferObjects.Input;
 using CarDealer.Models;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
@@ -18,17 +19,49 @@ namespace CarDealer
 
             var supplierXmltext = File.ReadAllText("./Datasets/suppliers.xml");
             var partsXmltext = File.ReadAllText("./Datasets/parts.xml");
+            var carsXmltexl = File.ReadAllText(".//Datasets/cars.xml");
 
-            var result = ImportParts(context, partsXmltext);
+            var result = ImportCars(context, carsXmltexl);
 
             System.Console.WriteLine(result);
 
         }
 
+
+        public static string ImportCars(CarDealerContext context, string inputXml) 
+        {
+            var root = "Cars";
+
+            var carDto = XmlConverter.Deserializer<CarInputModel>(inputXml, root);
+
+            var allParts = context.Parts.Select(p => p.Id).ToList();
+
+            var cars = carDto
+                .Select(x => new Car
+                {
+                    Make = x.Make,
+                    Model = x.Model,
+                    TravelledDistance = x.TraveledDistance,
+                    PartCars = x.CarPartsInputModel.Select(x => x.Id)
+                        .Distinct()
+                        .Intersect(allParts)
+                        .Select(pc => new PartCar
+                        {
+                            PartId = pc
+                        })
+                        .ToList()
+                })
+                .ToList();
+            
+            context.AddRange(cars);
+            context.SaveChanges();
+
+            return $"Successfully imported {cars.Count}";
+        }
+
         /// <summary>
         /// 10th Exercise - ImportParts from Xml to PartInputModel and deserialize it and add them in the DataBase
         /// </summary>
-     
         public static string ImportParts(CarDealerContext context, string inputXml)
         {
             var root = "Parts";
@@ -65,7 +98,6 @@ namespace CarDealer
         /// This method Import and Deserioalize the Suppliers from Xml file suppliers to SuplierInputModel to the Databese
         /// </summary>
         /// 9th Exercise
-
         public static string ImportSuppliers(CarDealerContext context, string inputXml) 
         {
             var root = "Suppliers";
