@@ -15,10 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DataTransferObjects\Output\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Datasets\cars.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

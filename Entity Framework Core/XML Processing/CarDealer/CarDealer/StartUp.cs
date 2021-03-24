@@ -1,6 +1,8 @@
 ﻿using CarDealer.Data;
 using CarDealer.DataTransferObjects.Input;
+using CarDealer.DataTransferObjects.Output;
 using CarDealer.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -23,10 +25,33 @@ namespace CarDealer
             var salesXmlText = File.ReadAllText(".//Datasets/cars.xml");
             var customersXmlText = File.ReadAllText(".//Datasets/customers.xml");
 
-            var result = ImportSales(context, salesXmlText);
+            //var result = ImportSales(context, salesXmlText);
 
-            System.Console.WriteLine(result);
+            Console.WriteLine(GetCarsWithDistance(context));
 
+        }
+
+
+        public static string GetCarsWithDistance(CarDealerContext context)  // Query 14. Cars With Distance EXPORT
+        {
+            //Get all cars with distance more than 2,000,000. Order them by make, then by model alphabetically. Take top 10 records.
+
+            var cars = context.Cars
+                .Where(c => c.TravelledDistance > 2_000_000)
+                .Select(c => new CarOutputModel
+                {
+                    Make = c.Make,
+                    Model = c.Model,
+                    TravelledDistance = c.TravelledDistance
+                })
+                .OrderBy(x => x.Make)
+                .ThenBy(x => x.Model)
+                .Take(10)
+                .ToArray();
+
+            var result = XmlConverter.Serialize(cars, "cars");
+
+            return result;
         }
 
 
@@ -49,7 +74,7 @@ namespace CarDealer
             context.SaveChanges();
 
             return $"Successfully imported {customers.Count}";
-        }
+        } // Query 12. Import Customers
 
 
         public static string ImportSales(CarDealerContext context, string inputXml)
@@ -77,7 +102,7 @@ namespace CarDealer
             context.SaveChanges();
 
             return $"Successfully imported {sales.Count()}";
-        }
+        } //Query 13. Import Sales
 
         public static string ImportCars(CarDealerContext context, string inputXml) 
         {
