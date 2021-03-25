@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using ProductShop.Data;
 using ProductShop.DataTransferObjects;
@@ -35,40 +36,49 @@ namespace ProductShop
             Console.WriteLine(result);
         }
 
-        // Query 7. Export Users and Products SOME BUGGY TASK
 
-        //public static string GetUsersWithProducts(ProductShopContext context)
-        //{
-        //    var users = context.Users
-        //        .Where(u => u.ProductsSold.Any(p => p.BuyerId != null))
-        //        .Select(u => new
-        //        {
-        //            lastName = u.LastName,
-        //            age = u.Age,
-        //            soldProducts = new
-        //            {
-        //                count = u.ProductsSold.Count(),
-        //                products = u.ProductsSold.Where(p => p.BuyerId != null).Select(p => new
-        //                {
-        //                    name = p.Name,
-        //                    price = p.Price
-        //                })
-        //            }
-        //        })
-        //        .OrderByDescending(x => x.soldProducts.Count())
-        //        .ToList();
 
-        //    var resultObject = new
-        //    {
-        //        usersCount = context.Users.Count(),
-        //        users = users
-        //    };
+        public static string GetUsersWithProducts(ProductShopContext context)
+        {
+            var users = context.Users
+                .Include(x => x.ProductsSold)
+                .ToList()
+                .Where(u => u.ProductsSold.Any(p => p.BuyerId != null))
+                .Select(u => new
+                {
+                    firstName = u.FirstName,
+                    lastName = u.LastName,
+                    age = u.Age,
+                    soldProducts = new
+                    {
+                        count = u.ProductsSold.Where(x => x.BuyerId != null).Count(),
+                        products = u.ProductsSold.Where(x => x.BuyerId != null).Select(p => new
+                        {
+                            name = p.Name,
+                            price = p.Price
+                        })
+                    }
+                })
+                .OrderByDescending(x => x.soldProducts.products.Count())
+                .ToList();
 
-        //    var resultJson = JsonConvert.SerializeObject(resultObject);
+            var resultObject = new
+            {
+                usersCount = context.Users.Count(),
+                users = users
+            };
 
-        //    return resultObject;
+            var jsonSerializerSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
 
-        //{
+            var resultJson = JsonConvert.SerializeObject(resultObject, Formatting.Indented, jsonSerializerSettings);
+
+            return resultJson;
+
+        }
+
 
         public static string GetCategoriesByProductsCount(ProductShopContext context)
         {
