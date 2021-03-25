@@ -29,16 +29,68 @@ namespace CarDealer
 
             var result = GetOrderedCustomers(context);
 
-            Console.WriteLine(GetCarsWithTheirListOfParts(context));
+            Console.WriteLine(GetSalesWithAppliedDiscount(context));
         }
 
-        public static string GetCarsWithTheirListOfParts(CarDealerContext context) 
+        public static string GetSalesWithAppliedDiscount(CarDealerContext context)
+        {
+            //Get first 10 sales with information about the car, customer and price of
+            //the sale with and without discount.Export the list of sales to JSON in the format provided below.
+
+            var sales = context.Sales
+                .Take(10)
+                .Select(s => new
+                {
+                    car = new
+                    {
+                        Make = s.Car.Make,
+                        Model = s.Car.Model,
+                        TravelledDistance = s.Car.TravelledDistance
+                    },
+                    customerName = s.Customer.Name,
+                    Discount = $"{s.Discount}",
+                    price = $"{s.Car.PartCars.Select(p => p.Part.Price).Sum()}",
+                    priceWithDiscount = $"{((s.Car.PartCars.Select(p => p.Part.Price).Sum()) * (1.00m - (s.Discount / 100))):f2}"
+                })
+                .ToArray();
+
+            var result = JsonConvert.SerializeObject(sales, Formatting.Indented);
+
+            return result;
+        }
+
+        public static string GetTotalSalesByCustomer(CarDealerContext context) 
+        {
+            //Get all customers that have bought at least 1 car and get their names, bought cars count and
+            //total spent money on cars
+            //.Order the result list by total spent money descending then by total bought cars again in descending order.
+            
+            var customers = context.Customers
+                .Where(x => x.Sales.Select(car => car.Car).Count() >= 1)
+                .Select(c => new 
+                {
+                    fullName = c.Name,
+                    boughtCars = c.Sales.Select(car => car.Car).Count(),
+                    spentMoney = c.Sales
+                        .Select(s => s.Car.PartCars
+                                    .Select(m => m.Part.Price)
+                                    .Sum())
+                })
+                .OrderByDescending(c => c.spentMoney)
+                .ThenByDescending(c => c.boughtCars)
+                .ToArray();
+
+            var result = JsonConvert.SerializeObject(customers, Formatting.Indented);
+
+            return result;
+        }
+      
+        public static string GetCarsWithTheirListOfParts(CarDealerContext context) //Query 15. Export Cars with Their List of Parts
         {
             //    Get all cars along with their list of parts.
             //    For the car get only make, model and travelled distance and for the parts get only name and
             //    price(formatted to 2nd digit after the decimal point).
             //    Export the list of cars and their parts to JSON in the format provided below.
-
 
             var cars = context.Cars
                .Select(c => new
