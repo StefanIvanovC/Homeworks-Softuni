@@ -33,9 +33,10 @@ namespace CarDealer
 
         public static string ImportCustomers(CarDealerContext context, string inputJson) // Query 12. Import Sales
         {
-            var customers = JsonConvert
-                .DeserializeObject<IEnumerable<Customer>>(inputJson)
-                .ToList();
+            var customers = JsonConvert.DeserializeObject<IEnumerable<Customer>>(inputJson).ToList();
+
+            context.AddRange(customers);
+            context.SaveChanges();
 
             return $"Successfully imported {customers.Count}.";
         }
