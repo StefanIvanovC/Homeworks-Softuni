@@ -29,9 +29,31 @@ namespace CarDealer
 
             var result = GetOrderedCustomers(context);
 
-            Console.WriteLine(GetOrderedCustomers(context));
+            Console.WriteLine(GetCarsFromMakeToyota(context));
         }
 
+        public static string GetCarsFromMakeToyota(CarDealerContext context) 
+        {
+            //Get all cars from make Toyota and order them by model alphabetically and by travelled distance descending.
+            //Export the list of cars to JSON in the format provided below.
+
+            var cars = context.Cars
+                .Where(c => c.Make == "Toyota")
+                .Select(c => new
+                {
+                    Id = c.Id,
+                    Make = c.Make,
+                    Model = c.Model,
+                    TravelledDistance = c.TravelledDistance
+                })
+                .OrderBy(c => c.Model)
+                .ThenByDescending(c => c.TravelledDistance)
+                .ToList();
+
+            var result = JsonConvert.SerializeObject(cars, Formatting.Indented);
+
+            return result;
+        }
 
         public static string GetOrderedCustomers(CarDealerContext context)
         {
