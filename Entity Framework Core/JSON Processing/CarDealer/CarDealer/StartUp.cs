@@ -24,11 +24,49 @@ namespace CarDealer
             var jsonParts = File.ReadAllText("../../../Datasets/parts.json");
             var jsonCars = File.ReadAllText("../../../Datasets/cars.json");
             var jsoncustomers = File.ReadAllText("../../../Datasets/customers.json");
+            var jsonSles = File.ReadAllText("../../../Datasets/sales.json");
 
 
-            var result = ImportCustomers(context, jsoncustomers);
+            var result = GetOrderedCustomers(context);
 
-            Console.WriteLine(result);
+            Console.WriteLine(GetOrderedCustomers(context));
+        }
+
+
+        public static string GetOrderedCustomers(CarDealerContext context)
+        {
+            //Get all customers ordered by their birth date ascending.
+            //If two customers are born on the same date first print those who are not young drivers
+            //(e.g.print experienced drivers first)
+            //Export the list of customers to JSON in the format provided below
+
+            var orderedCustomers = context.Customers
+                .OrderBy(c => c.BirthDate)
+                .ThenBy(x => x.IsYoungDriver)
+                .Select(c => new
+                {
+                    Name = c.Name,
+                    BirthDate = c.BirthDate.ToString("dd/MM/yyyy"),
+                    IsYoungDriver = c.IsYoungDriver
+                })
+                .ToList();
+
+            var result = JsonConvert.SerializeObject(orderedCustomers, Formatting.Indented);
+
+            return result;
+
+        }
+
+
+        public static string ImportSales(CarDealerContext context, string inputJson)
+        {
+            var sales = JsonConvert.DeserializeObject<ImportSalesModel[]>(inputJson);
+
+            context.AddRange(sales);
+            context.SaveChanges();
+
+            return $"Successfully imported {sales.Count()}.";
+
         }
 
         public static string ImportCustomers(CarDealerContext context, string inputJson) // Query 12. Import Sales
