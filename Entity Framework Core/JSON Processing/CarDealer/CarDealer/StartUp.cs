@@ -29,7 +29,59 @@ namespace CarDealer
 
             var result = GetOrderedCustomers(context);
 
-            Console.WriteLine(GetCarsFromMakeToyota(context));
+            Console.WriteLine(GetCarsWithTheirListOfParts(context));
+        }
+
+        public static string GetCarsWithTheirListOfParts(CarDealerContext context) 
+        {
+            //    Get all cars along with their list of parts.
+            //    For the car get only make, model and travelled distance and for the parts get only name and
+            //    price(formatted to 2nd digit after the decimal point).
+            //    Export the list of cars and their parts to JSON in the format provided below.
+
+
+            var cars = context.Cars
+               .Select(c => new
+               {
+                   car = new
+                   {
+                       Make = c.Make,
+                       Model = c.Model,
+                       TravelledDistance = c.TravelledDistance
+                   },
+                   parts = c.PartCars.Select(p => new
+                   {
+                       Name = p.Part.Name,
+                       Price = $"{p.Part.Price:f2}"
+                   })
+                    .ToArray()
+               })
+               .ToArray();
+
+            var result = JsonConvert.SerializeObject(cars, Formatting.Indented);
+
+            return result;
+        }
+
+        public static string GetLocalSuppliers(CarDealerContext context) 
+        {
+            //Get all suppliers that do not import parts from abroad. +
+            //Get their id, name and the number of parts they can offer to supply. +
+            //Export the list of suppliers to JSON in the format provided below.
+            var localSuppliers = context.Suppliers
+                .Where(s => s.IsImporter != true)
+                .Select(s => new
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    PartsCount = s.Parts.Count()
+                })
+                .ToList();
+
+            var result = JsonConvert.SerializeObject(localSuppliers, Formatting.Indented);
+
+            return result;
+
         }
 
         public static string GetCarsFromMakeToyota(CarDealerContext context) 
