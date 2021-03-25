@@ -1,4 +1,5 @@
 ﻿using ProductShop.Data;
+using ProductShop.Dtos.Export;
 using ProductShop.Dtos.Import;
 using ProductShop.Models;
 using System.IO;
@@ -18,12 +19,37 @@ namespace ProductShop
             var userXml = File.ReadAllText("../../../Datasets/users.xml");
             var productXml = File.ReadAllText("../../../Datasets/products.xml");
             var categoriesXml = File.ReadAllText("../../../Datasets/categories.xml");
+            var categorysProductsXml = File.ReadAllText("../../../Datasets/categories-products.xml");
 
-            var result = ImportCategories(context, categoriesXml);
+            // var result = ImportCategoryProducts(context, categorysProductsXml);
 
-            System.Console.WriteLine(result);
+            System.Console.WriteLine(GetProductsInRange(context));
+
+           
         }
 
+        public static string GetProductsInRange(ProductShopContext context) // Query 5. Products In Range
+        {
+            var root = "Products";
+            //Get all products in a specified price range between 500 and 1000 (inclusive).
+            //Order them by price (from lowest to highest).
+            //Select only the product name, price and the full name of the buyer. Take top 10 records.
+            var products = context.Products
+                .Where(p => p.Price >= 500 && p.Price <= 1000)
+                .Select(p => new ProductOutputModel
+                {
+                    Name = p.Name,
+                    Price = p.Price,
+                    Buyer = p.Buyer.FirstName + " " + p.Buyer.LastName
+                })
+                .OrderBy(p => p.Price)
+                .Take(10)                
+                .ToList();
+
+            var result = XmlConverter.Serialize(products, root);
+
+            return result;
+        }
         public static string ImportCategoryProducts(ProductShopContext context, string inputXml) // Query 4. Import Categories and Products
         {
             var root = "CategoryProducts";
@@ -49,7 +75,6 @@ namespace ProductShop
 
             return result;
         }
-
 
         public static string ImportCategories(ProductShopContext context, string inputXml) // Query 3. Import Categories
         {
