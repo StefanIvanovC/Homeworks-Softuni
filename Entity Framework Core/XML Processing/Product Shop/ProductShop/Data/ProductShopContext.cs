@@ -45,6 +45,17 @@
                       .WithOne(x => x.Seller)
                       .HasForeignKey(x => x.SellerId);
             });
+
+           // modelBuilder.Entity<Product>(entity =>
+           //{
+           //     entity.HasMany(x => x.)
+           //           .WithOne(x => x.Buyer)
+           //           .HasForeignKey(x => x.BuyerId);
+
+           //     entity.HasMany(x => x.ProductsSold)
+           //           .WithOne(x => x.Seller)
+           //           .HasForeignKey(x => x.SellerId);
+           // });
         }
     }
 }
